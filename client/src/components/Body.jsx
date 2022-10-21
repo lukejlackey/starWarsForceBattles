@@ -100,7 +100,11 @@ const Body = () => {
                 }
             >
                 <h2>Who would win?</h2>
-                <Battle />
+                {
+                    (pool.length > 0) ?
+                        <Battle /> :
+                        <h2>Loading...</h2>
+                }
             </BodyContext.Provider>
         </div>
     )

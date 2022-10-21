@@ -108,14 +108,12 @@ button {
 
 .char:not(:disabled):hover {
   width: 100%;
-  font-size: 6vw;
   cursor: pointer;
   filter: brightness(125%);
 }
 
 .Winner {
   width: 100%;
-  font-size: 6vw;
   filter: brightness(125%);
 }
 
@@ -172,7 +170,6 @@ button {
 
 .Next:not(:disabled):hover {
   width: 52%;
-  font-size: 4.5vw;
   cursor: pointer;
   filter: brightness(125%);
 }
