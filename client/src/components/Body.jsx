@@ -7,8 +7,8 @@ const Body = () => {
 
     const [pool, setPool] = useState([]);
     const [chars, setChars] = useState([]);
-    const [winner, setWinner] = useState('None');
-    const [winPct, setWinPct] = useState('None');
+    const [winner, setWinner] = useState(null);
+    const [winPct, setWinPct] = useState(null);
 
     useEffect(() => {
         fetchPool();
@@ -46,8 +46,8 @@ const Body = () => {
 
     const handleNext = (e) => {
         if (winPct) {
-            setWinPct('None');
-            setWinner('None');
+            setWinPct(null);
+            setWinner(null);
             shuffleAndPickChars(pool);
         }
     }

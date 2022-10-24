@@ -1,5 +1,4 @@
-import axios from 'axios';
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import BodyContext from '../../BodyContext';
 
 const Character = (props) => {
@@ -9,7 +8,7 @@ const Character = (props) => {
     const { chars, winner, handleVote } = useContext(BodyContext);
 
     const determineClass = () => {
-        if (winner === 'None') return '';
+        if (winner === null) return '';
         return winner === charIdx ? 'Winner' : 'Loser';
     }
 
@@ -17,9 +16,9 @@ const Character = (props) => {
         <>
             < button
                 className={`char ${side} ${determineClass()}`}
-                value={charIdx === 0 || charIdx === 1 ? charIdx : 'None'}
+                value={charIdx === 0 || charIdx === 1 ? charIdx : null}
                 onClick={(e) => handleVote(e, charIdx)}
-                disabled={winner != 'None'}
+                disabled={winner != null}
             >
                 {chars[charIdx] ? chars[charIdx].name : ''}
             </button>

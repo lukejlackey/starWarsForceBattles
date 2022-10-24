@@ -8,7 +8,7 @@ const Results = () => {
     return (
         <div className='Results'>
             {
-                winPct === "None" ?
+                winPct === null ?
                     '' :
                     <h2>
                         {
@@ -18,7 +18,7 @@ const Results = () => {
                         }
                     </h2>
             }
-            <button onClick={handleNext} className='Next' disabled={winPct === "None"}>NEXT</button>
+            <button onClick={handleNext} className='Next' disabled={winPct === null}>NEXT</button>
         </div>
     )
 }
