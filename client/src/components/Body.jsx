@@ -3,6 +3,8 @@ import { useSpring, animated } from 'react-spring'
 import axios from 'axios';
 import BodyContext from '../BodyContext';
 import Battle from './body/Battle';
+import linkedin from '../images/linkedin.png';
+import github from '../images/github.png';
 
 const Body = () => {
 
@@ -157,9 +159,9 @@ const Body = () => {
                                 'Next':
                                 'Skip'
                             }</button>
-                            <div>
-                                <a>Github</a>
-                                <a>LinkedIn</a>
+                            <div className='Links'>
+                                <a href='https://github.com/lukejlackey'><img src={github} alt='Github Logo'/></a>
+                                <a href='https://www.linkedin.com/in/lukejlackey'><img src={linkedin} alt='LinkedIn Logo'/></a>
                             </div>
                         </>
                         :

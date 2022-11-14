@@ -12,7 +12,7 @@ const Character = (props) => {
     const character = chars[charIdx];
     
     const barHeight = useSpring({ 
-        to: { height: character.winPct? `${parseFloat(character.winPct) / 5}rem`: `0rem` },
+        to: { height: character.winPct? `${parseFloat(character.winPct) / 7.5}rem`: `0rem` },
         from: { height: `0rem` },
     })
     

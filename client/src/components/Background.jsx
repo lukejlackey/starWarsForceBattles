@@ -18,15 +18,11 @@ const Background = () => {
         }
     })
     return (
-        <animated.div style={{
-            position: 'fixed',
-            top: '-50rem',
-            left: '-50rem',
+        <animated.div
+        className='bg'
+         style={{
             backgroundImage: `url(${bg})`,
             backgroundSize: 'cover',
-            height: '200rem',
-            width: '200rem',
-            overflow: 'hidden',
             zIndex: -1,
             ...styles
         }}
