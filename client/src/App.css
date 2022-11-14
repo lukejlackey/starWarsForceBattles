@@ -1,192 +1,194 @@
-@font-face {
-  font-family: StarWars;
-  src: url('./fonts/Jabba\ the\ Font\ Regular.ttf');
-}
-
 
 .App {
-  height: 140vh;
+  height: 100vh;
   margin: auto;
-  padding: 2.5vw 0;
   text-align: center;
-  background-image: url('./images/hull-texture.jpg');
-  background-repeat: repeat;
-  background-size: 100vh;
 }
 
-@keyframes backgroundScroll {
-  from {
-    background-position: 0 0;
-  }
-
-  to {
-    background-position: 0px -10px;
-  }
-}
-
-.App h1,
+h1,
 h3 {
-  font-family: StarWars;
+  font-family: 'Gemunu Libre', sans-serif;
 }
 
 h1 {
-  text-shadow: 0 0 2vw #ff0000, 0 0 0.3vw #ff0000, 0 0 0.5vw #ffffff;
-  color: hsla(0, 0%, 100%, 0.396);
-  font-size: 5vw;
+  font-size: 4rem;
+  height: 90%;
 }
 
 h2 {
-  font-size: 5vw;
-  color: #2d17adcb;
-  text-shadow: 0 0 2vw #2e17ad, 0 0 0.3vw #2e17ad, 0 0 0.5vw #ffffff;
-
-  margin: 2vw auto;
+  font-size: 4rem;
+  width: 75%;
+  margin: 10rem auto 1rem;
+  transition: 0.5s ease-in-out;
 }
 
 h3 {
-  text-shadow: 0 0 0.5vw #ffe814, 0 0 0.15vw #ffe814, 0 0 0.35vw #ffffff;
-  color: hsla(0, 0%, 100%, 0.396);
-  font-size: 3vw;
+  font-size: 3rem;
+  height: 10%;
+}
+
+p {
+  font-size: 2rem;
 }
 
 button {
-  font-size: 4vw;
+  transition: 0.5s ease-in-out;
   font-weight: bold;
+  background-color: transparent;
+  width: 100%;
+  border: none;
+}
+
+.NameButton {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+}
+
+.NameButton:hover:not(:disabled) {
+  font-size: 5.1rem;
 }
 
 .Title {
   width: 100;
-  height: 100;
-  background-image: url('./images/deep-space.jpg');
-  background-repeat: repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  box-shadow: 0 0 5vw black inset, 0 0 1vw black;
-  border-top: 0.25vw solid rgb(56, 56, 56);
-  border-bottom: 0.25vw solid rgb(56, 56, 56);
-  padding: 2.5%;
-  -webkit-animation: backgroundScroll 3s ease-in-out infinite alternate;
-  -moz-animation: backgroundScroll 3s ease-in-out infinite alternate;
-  animation: backgroundScroll 3s ease-in-out infinite alternate;
+  height: 20vh;
+  padding-bottom: 1vh;
 }
 
-.Body * {
+.AppBody {
+  height: 80vw;
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  border-radius: 50%;
+  border-top: 1px solid rgba(255, 255, 255, 0.389);
+  margin: 1rem auto;
+}
+
+.AppBody * {
   font-family: 'Gemunu Libre', sans-serif;
 }
 
-.Body>h2 {
-  background-color: rgba(0, 0, 0, 0.273);
-  box-shadow: 0 0 3vw black inset, 0 0 1vw black;
-  border: 0.25vw solid rgb(56, 56, 56);
-  width: fit-content;
-  padding: 1vw;
-  border-radius: 2vw;
+.NeutralText {
+  color: #e3befbcb;
+}
+
+.Neutral {
+  box-shadow: 0 -10px 100px 0 #b976efb6;
+  background-color: #1e0c33f9;
+}
+
+.LightSideText {
+  color: #a19ffecb;
+}
+
+button.LightSideText:hover {
+  text-shadow: 0 0 0.3rem #1500ff, 0 0 0.1rem #1500ff, 0 0 0.2rem #ffffff;
+}
+
+.LightSideBar {
+  background-color: #a19ffecb;
+}
+
+.LightSide {
+  box-shadow: 0 -10px 100px 0 #7688efb6;
+  background-color: #141650f9;
+}
+
+.DarkSideText {
+  color: #f58585cb;
+}
+
+button.DarkSideText:hover {
+  text-shadow: 0 0 0.3rem #ff0000, 0 0 0.1rem #ff0000, 0 0 0.2rem #ffffff;
+}
+
+.DarkSideBar {
+  background-color: #f58585cb;
+}
+
+.DarkSide {
+  box-shadow: 0 -10px 100px 0 #ef7676b6;
+  background-color: #330c0cf9;
 }
 
 .Battle {
-  width: 75%;
-  height: 40vh;
-  margin: auto;
-  background-color: rgba(0, 0, 0, 0.273);
-  box-shadow: 0 0 3vw black inset, 0 0 1vw black;
-  border: 0.25vw solid rgb(56, 56, 56);
-  border-radius: 2vw;
-  padding: 2.5%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  width: 100%;
   align-items: center;
+  justify-content: center;
 }
 
-.char {
-  width: 50%;
-  height: 100%;
-  transition: 1s ease-in-out;
-  border: 0;
-  z-index: 2;
-}
-
-.char:not(:disabled):hover {
+.Characters {
   width: 100%;
-  cursor: pointer;
-  filter: brightness(125%);
-}
-
-.Winner {
-  width: 100%;
-  filter: brightness(125%);
-}
-
-.chars {
-  width: 90%;
-  height: 50%;
-  box-shadow: 0 0 3vw black;
-  border-radius: 4vw;
   display: flex;
-  align-items: center;
+  justify-content: space-around;
 }
 
-.left {
-  color: #706304b8;
-  text-shadow: 0 0 0.5vw #ffe814, 0 0 0.15vw #ffe814, 0 0 0.35vw #ffffff;
-  background-color: #efdc4c;
-  border-radius: 4vw 0 0 4vw;
-  box-shadow: 0 0 1vw #efdc4c, 0 0 0.15vw #efdc4c, 0 0 0.5vw #ffffff;
-}
-
-.left.Loser {
-  background-color: #8e822c;
-  z-index: 1;
-  box-shadow: 0 0 0.5vw #000000;
-  text-shadow: 0 0 0.35vw #000000;
-}
-
-.right {
-  color: #991811b5;
-  text-shadow: 0 0 2vw #ff0000, 0 0 0.3vw #ff0000, 0 0 0.5vw #ffffff;
-  background-color: #FF827C;
-  border-radius: 0 4vw 4vw 0;
-  box-shadow: 0 0 1vw #FF827C, 0 0 0.15vw #FF827C, 0 0 0.5vw #ffffff;
-}
-
-.right.Loser {
-  background-color: #773f3c;
-  z-index: 1;
-  box-shadow: 0 0 0.5vw #000000;
-  text-shadow: 0 0 0.35vw #000000;
-}
-
-.Next {
-  width: 50%;
-  height: 40%;
-  transition: 0.5s ease-in-out;
-  border: 0;
-  color: #064314cb;
-  text-shadow: 0 0 2vw #0d952d, 0 0 0.3vw #0d952d, 0 0 0.5vw #ffffff;
-  background-color: #0d952d;
-  border-radius: 4vw;
-  box-shadow: 0 0 1vw #0d952d, 0 0 0.15vw #0d952d, 0 0 0.5vw #ffffff;
-}
-
-.Next:not(:disabled):hover {
-  width: 52%;
-  cursor: pointer;
-  filter: brightness(125%);
-}
-
-.Next:disabled {
-  color: #053310cb;
-  background-color: #074816;
-  box-shadow: 0 0 0.5vw #000000;
-  text-shadow: 0 0 0.35vw #000000;
-}
-
-.Results {
-  height: 75%;
-  width: 95%;
+.Character {
   display: flex;
   flex-direction: column;
+  width: 45%;
+  justify-content: flex-start;
   align-items: center;
-  justify-content: flex-end;
-  gap: 10%;
+  height: 25rem;
+}
+
+.BarContainer {
+  height: 10rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.WinPctBar {
+  color: white;
+  width: 7.5rem;
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.NextButton {
+  margin-top: 1rem;
+  font-size: 10rem; 
+}
+
+.NextButton:hover:not(:disabled) {
+  font-size: 11rem;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  :root {
+    font-size: 10px;
+  }
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  :root {
+    font-size: 20px;
+  }
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  :root {
+    font-size: 30px;
+  }
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  :root {
+    font-size: 40px;
+  }
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  :root {
+    font-size: 18px;
+  }
 }

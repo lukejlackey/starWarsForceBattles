@@ -1,28 +1,40 @@
 import React, { useContext } from 'react'
+import { useSpring, animated } from 'react-spring'
 import BodyContext from '../../BodyContext';
 
 const Character = (props) => {
+    
+    const { charIdx, scheme } = props;
 
-    const { charIdx, side } = props;
+    const { chars, handleVote, schemes, voted } = useContext(BodyContext);
 
-    const { chars, winner, handleVote } = useContext(BodyContext);
-
-    const determineClass = () => {
-        if (winner === null) return '';
-        return winner === charIdx ? 'Winner' : 'Loser';
-    }
-
+    const colorScheme = schemes[scheme];
+    const character = chars[charIdx];
+    
+    const barHeight = useSpring({ 
+        to: { height: character.winPct? `${parseFloat(character.winPct) / 5}rem`: `0rem` },
+        from: { height: `0rem` },
+    })
+    
     return (
-        <>
-            < button
-                className={`char ${side} ${determineClass()}`}
+        <div className='Character'>
+            <div className='BarContainer'>
+                <animated.div className={`WinPctBar`} style={{ backgroundColor: colorScheme['color'],...barHeight}} >{(voted)? `${character.winPct}%` : ''}</animated.div>
+            </div>
+            <button
+                className='NameButton'
+                style={{color:colorScheme['color']}}
                 value={charIdx === 0 || charIdx === 1 ? charIdx : null}
-                onClick={(e) => handleVote(e, charIdx)}
-                disabled={winner != null}
+                onClick={(e) => handleVote(e, charIdx, colorScheme)}
+                disabled={voted}
             >
-                {chars[charIdx] ? chars[charIdx].name : ''}
+                {character ? character.name : ''}
             </button>
-        </>
+            {
+                (voted)?
+                <p style={{color: colorScheme['color']}}>{character.voters} of {character.votersTotal} other voters {character.winner?'':'dis'}agree{character.voters === 1? 's':''} with you</p>:''
+            }
+        </div>
     )
 }
 

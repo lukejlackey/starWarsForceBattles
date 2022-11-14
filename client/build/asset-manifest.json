@@ -1,16 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.a36f0104.css",
-    "main.js": "/static/js/main.fcb557c5.js",
+    "main.css": "/static/css/main.f5dcc342.css",
+    "main.js": "/static/js/main.dfa6307e.js",
     "static/media/deep-space.jpg": "/static/media/deep-space.d9807e6a516e10c63675.jpg",
-    "static/media/hull-texture.jpg": "/static/media/hull-texture.6f4f7bb36cfc225ec739.jpg",
-    "static/media/Jabba the Font Regular.ttf": "/static/media/Jabba the Font Regular.89517900c9fa2821749e.ttf",
+    "static/media/StarJedi-DGRW.ttf": "/static/media/StarJedi-DGRW.4c37e50c5883f338f4ec.ttf",
     "index.html": "/index.html",
-    "main.a36f0104.css.map": "/static/css/main.a36f0104.css.map",
-    "main.fcb557c5.js.map": "/static/js/main.fcb557c5.js.map"
+    "main.f5dcc342.css.map": "/static/css/main.f5dcc342.css.map",
+    "main.dfa6307e.js.map": "/static/js/main.dfa6307e.js.map"
   },
   "entrypoints": [
-    "static/css/main.a36f0104.css",
-    "static/js/main.fcb557c5.js"
+    "static/css/main.f5dcc342.css",
+    "static/js/main.dfa6307e.js"
   ]
 }

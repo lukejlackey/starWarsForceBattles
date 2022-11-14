@@ -1,18 +1,43 @@
 import React, { useState, useEffect } from 'react';
+import { useSpring, animated } from 'react-spring'
 import axios from 'axios';
 import BodyContext from '../BodyContext';
 import Battle from './body/Battle';
 
 const Body = () => {
 
+    const schemes = {
+        neutral:{
+            boxShadow: '0 -10px 100px 0 #b976efb6',
+            backgroundColor: '#1e0c33',
+            color: '#e3befbcb'
+        },
+        light: {
+            boxShadow: '0 -10px 100px 0 #7688efb6',
+            backgroundColor: '#141650',
+            color: '#a19ffecb'
+        },
+        dark: {
+            boxShadow: '0 -10px 100px 0 #ef7676b6',
+            backgroundColor: '#330c0c',
+            color: '#f58585cb'
+        }
+    };
+
     const [pool, setPool] = useState([]);
     const [chars, setChars] = useState([]);
-    const [winner, setWinner] = useState(null);
-    const [winPct, setWinPct] = useState(null);
+    const [voted, setVoted] = useState(false);
+    const [colorScheme, setColorScheme] = useState(schemes['neutral']);
 
     useEffect(() => {
         fetchPool();
-    }, [])
+    }, []);
+
+    const bg = useSpring({ 
+        from: schemes['neutral'],
+        to: colorScheme,
+    });
+    
 
     const fetchPool = () => {
         axios.get('https://swapi.dev/api/people/')
@@ -23,7 +48,7 @@ const Body = () => {
             .catch(err => {
                 console.error(err);
             })
-    }
+    };
 
     const shuffleAndPickChars = (array) => {
         let currentIndex = array.length, randomIndex;
@@ -32,29 +57,36 @@ const Body = () => {
             currentIndex--;
             [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
         }
+        array[0].winPct = null;
+        array[0].winner = null;
+        array[1].winPct = null;
+        array[1].winner = null;
         setChars([array[0], array[1]])
         return array;
-    }
+    };
 
-    const handleVote = (e, charIdx) => {
+    const handleVote = async (e, charIdx, scheme) => {
         e.preventDefault();
         if (e.target.value == charIdx) {
-            setWinner(charIdx);
-            recordResult(chars[charIdx], chars[Math.abs(charIdx - 1)]);
+            setColorScheme(scheme);
+            await recordResult(charIdx);
+            setVoted(true);
         }
-    }
+    };
 
     const handleNext = (e) => {
-        if (winPct) {
-            setWinPct(null);
-            setWinner(null);
-            shuffleAndPickChars(pool);
-        }
-    }
+        setVoted(false);
+        setColorScheme(schemes['neutral'])
+        shuffleAndPickChars(pool);
+    };
 
 
-    const recordResult = (winner, loser) => {
-        axios.post('http://localhost:8000/api/battle/new',
+    const recordResult = async (charIdx) => {
+        let charsDup = chars;
+        let winner = charsDup[charIdx];
+        let loser = charsDup[Math.abs(charIdx - 1)];
+        console.log({winner, loser})
+        await axios.post('http://localhost:8000/api/battle/new',
             { winner: winner.name, loser: loser.name }
         )
             .then(res => {
@@ -62,51 +94,79 @@ const Body = () => {
                 let records = res.data.result.opponents;
                 let wins = getWins(records, winner.name);
                 let losses = getWins(records, loser.name);
-                setWinPct(calcWinPct(wins, losses));
+                let voters = wins + losses;
+                let winPct = calcWinPct(wins, losses);
+                console.log({winPct})
+                charsDup[charIdx].winner = true;
+                charsDup[charIdx].winPct = winPct;
+                charsDup[charIdx].voters = wins;
+                charsDup[charIdx].votersTotal = voters;
+                charsDup[Math.abs(charIdx - 1)].winner = false;
+                charsDup[Math.abs(charIdx - 1)].winPct = (100 - winPct).toPrecision(3);
+                charsDup[Math.abs(charIdx - 1)].voters = losses;
+                charsDup[Math.abs(charIdx - 1)].votersTotal = voters;
+                setChars(charsDup);
             })
             .catch(err => {
                 console.error(err);
             });
-    }
+    };
 
     const getWins = (data, name) => {
         const wins = data
             .filter((record) => record.name == name)
             .map((record) => record.wins)[0];
-        return wins != undefined ? wins : 0;
-    }
+        return wins !== undefined ? wins : 0;
+    };
 
     const calcWinPct = (wins, losses) => {
-        if (!wins && !losses) return "New";
         if (!losses) return 100;
         return ((wins / (wins + losses)) * 100).toPrecision(3);
-    }
+    };
 
     return (
-        <div className='Body'>
+        <animated.div className={`AppBody`} style={bg}>
             <BodyContext.Provider
                 value={
                     {
-                        pool: pool,
-                        chars: chars,
-                        shuffleAndPickChars: shuffleAndPickChars,
-                        winner: winner,
-                        setWinner: setWinner,
-                        winPct: winPct,
-                        setWinPct: setWinPct,
-                        handleVote: handleVote,
-                        handleNext: handleNext
+                        pool,
+                        chars,
+                        voted,
+                        schemes,
+                        colorScheme,
+                        setColorScheme,
+                        handleVote,
+                        handleNext,
                     }
                 }
             >
-                <h2>Who would win?</h2>
                 {
                     (pool.length > 0) ?
-                        <Battle /> :
-                        <h2>Loading...</h2>
+                        <>
+                            <h2 style={{color: colorScheme['color']}}>{
+                            colorScheme['color'] === schemes['neutral']['color']?
+                            'Who is stronger with the Force?':
+                            'You have spoken!'
+                            }</h2>
+                            <Battle />
+                            <button 
+                            onClick={handleNext}
+                            className='NextButton' 
+                            style={{color: colorScheme['color']}}>{
+                                voted?
+                                'Next':
+                                'Skip'
+                            }</button>
+                            <div>
+                                <a>Github</a>
+                                <a>LinkedIn</a>
+                            </div>
+                        </>
+                        :
+                        <h2 style={{color: colorScheme['color']}}>Reaching out to the Force...</h2>
                 }
             </BodyContext.Provider>
-        </div>
+        </animated.div>
     )
 }
 
